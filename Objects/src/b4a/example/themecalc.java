@@ -10,14 +10,7 @@ private static themecalc mostCurrent = new themecalc();
 public static Object getObject() {
     throw new RuntimeException("Code module does not support this method.");
 }
- public anywheresoftware.b4a.keywords.Common __c = null;
+ 
+public anywheresoftware.b4a.keywords.Common __c = null;
 public b4a.example.main _main = null;
-  public Object[] GetGlobals() {
-		return new Object[] {"Main",Debug.moduleToString(b4a.example.main.class)};
-}
-public static String  _process_globals() throws Exception{
- //BA.debugLineNum = 3;BA.debugLine="Sub Process_Globals";
- //BA.debugLineNum = 9;BA.debugLine="End Sub";
-return "";
-}
 }

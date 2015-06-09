@@ -1,21 +1,22 @@
-﻿Version=4.3
-IconFile=
-NumberOfModules=5
+﻿Version=5
+NumberOfModules=6
 Module1=CoffeeTheme
 Module2=Card
 Module3=CoffeeStamp
 Module4=ThemeCalc
 Module5=Data
+Module6=RedeemCoffee
 Build1=Default,b4a.example
-DoNotOverwriteManifest=False
 ManifestCode='This code will be applied to the manifest file during compilation.~\n~'You do not need to modify it in most cases.~\n~'See this link for for more information: http://www.basic4ppc.com/forum/showthread.php?p=78136~\n~AddManifestText(~\n~<uses-sdk android:minSdkVersion="5" android:targetSdkVersion="14"/>~\n~<supports-screens android:largeScreens="true" ~\n~    android:normalScreens="true" ~\n~    android:smallScreens="true" ~\n~    android:anyDensity="true"/>)~\n~SetApplicationAttribute(android:icon, "@drawable/icon")~\n~SetApplicationAttribute(android:label, "$LABEL$")~\n~AddApplicationText(~\n~<activity android:name="ice.zxing.CaptureActivity"~\n~					android:screenOrientation="portrait" android:configChanges="orientation|keyboardHidden"~\n~					android:theme="@android:style/Theme.NoTitleBar.Fullscreen"~\n~					android:windowSoftInputMode="stateAlwaysHidden">~\n~				</activity>)~\n~'End of default text.~\n~
-NumberOfFiles=6
+IconFile=
+NumberOfFiles=7
 File1=coffee_stamp.png
 File2=customerthemes.sqlite
 File3=freecoffee.bal
 File4=free-coffee-1-2.jpg
 File5=logoSample.png
 File6=main.bal
+File7=RedeemCoffee.bal
 NumberOfLibraries=3
 Library1=core
 Library2=sql
@@ -57,6 +58,7 @@ Sub Globals
 
 'Design members generated for the Coffee Theme Layout (Stamp images, Logo Image, Company Name label, Scan button)
 	Dim Card As Card 
+	Dim RedeemCoffee As RedeemCoffee
 	Private btnScan As Button
 	Private imgLogo As ImageView
 	Private imgStamp1, imgStamp2, imgStamp3, imgStamp4, imgStamp5, imgStamp6 As ImageView
@@ -220,20 +222,7 @@ If CoffeeCount = 6 Then
 	imgStamp6.Visible = False
 	End If 
 End Sub
-Sub btnScan_Click 'in order to bring information about free coffee just press once 
-	updateStamps	
-End Sub
-Sub btnyes_Click 'to redeem your free coffee press Yes 
-	CoffeeCount = 0
-	updateStamps
-	Activity.LoadLayout("main")
-	
-End Sub
-Sub btnno_Click ' you can also save and redeem later press No
-	activity.LoadLayout("main") 'will return to main layout
-End Sub
-
-Sub btnScan_LongClick ' in order to scan the barcode or bring the barcode scanner long press btnScan
+Sub btnScan_Click 'in order to bring scanner click on scan 
 	qrscanner.isportrait = True
 	qrscanner.useFrontCam = False
 	'set the timeoutDuration to a very high value (such as 2000000000) if you dont want it to time out
@@ -260,6 +249,24 @@ Sub btnScan_LongClick ' in order to scan the barcode or bring the barcode scanne
 	qrscanner.BeginScan("scanner")	'This is the function that opens the scanner activity
 	'	the string that is passed into the BeginScan function is the name of the events that result from the scanner library
 	' e.g if we passed "Taco" insted of scanner then the bottem functions woulod be called "Taco_result" and "Taco_noscan"
+
+	
+End Sub
+'Sub btnyes_Click 'to redeem your free coffee press Yes 
+''	CoffeeCount = 0
+''	updateStamps
+'	Activity.LoadLayout("RedeemCoffee")
+'	
+	
+
+Sub btnno_Click ' you can also save and redeem later press No
+	Activity.LoadLayout("main") 'will return to main layout
+	'after clicking no it's returning to main form but the panel is not fitting the screen 
+	'scanner is working fine after press no 
+End Sub
+
+Sub btnScan_LongClick ' in order to update stamps press and hold scan button
+		updateStamps
 End Sub
 
 Sub scanner_result(atype As String,Values As String)
@@ -277,3 +284,10 @@ Sub scanner_noscan(atype As String,Values As String)
 
 End Sub
 
+
+Sub btnyes_Click
+ Activity.LoadLayout("RedeemCoffee")
+ CoffeeCount = 0
+ updateStamps
+	
+End Sub
